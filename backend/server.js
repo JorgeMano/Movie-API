@@ -8,7 +8,7 @@ sequelize
     .then(() => console.log('Database authenticated'))
     .catch((err) => console.log(err));
 
-    initModels();
+initModels();
 
 sequelize
     .sync()

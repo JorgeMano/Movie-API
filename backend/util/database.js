@@ -10,7 +10,6 @@ const sequelize = new Sequelize({
     port: 5432,
     database: process.env.DB,
     dialect: 'postgres',
-    logging: false
 });
 
-module.export = { sequelize };
+module.exports = { sequelize };
