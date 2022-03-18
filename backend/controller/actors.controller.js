@@ -83,10 +83,7 @@ exports.updateActor = async (req, res) => {
             req.body,
             'name',
             'country',
-            'oscarsPrizes',
-            'rating',
-            'age',
-            'profilePic'
+            'age'
         );
         const actor = await Actor.findOne({
             where: { id: id, status: 'active' }
