@@ -34,7 +34,8 @@ const Actor = sequelize.define('actor', {
     },
     status: {
         type: DataTypes.STRING(10),
-        allowNull: false
+        allowNull: false,
+        defaultValue: 'active'
     }
 });
 

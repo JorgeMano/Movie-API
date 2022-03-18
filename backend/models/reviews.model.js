@@ -22,7 +22,8 @@ const Review = sequelize.define('review', {
     },
     status: {
         type: DataTypes.STRING(10),
-        allowNull: false
+        allowNull: false,
+        defaultValue: 'active'
     },
     userid: {
         type: DataTypes.INTEGER,

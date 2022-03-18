@@ -34,7 +34,8 @@ const Movie = sequelize.define('movie', {
     },
     status: {
         type: DataTypes.STRING(10),
-        allowNull: false
+        allowNull: false,
+        defaultValue: 'active'
     },
 });
 
