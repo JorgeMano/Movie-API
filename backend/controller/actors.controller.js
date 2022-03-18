@@ -3,8 +3,9 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
 const { Actor } = require('../models/actors.model');
-//const { Movie } = require('../models/movies.model');
-//const { User } = require('../models/users.model');
+const { Movie } = require('../models/movies.model');
+const { User } = require('../models/users.model');
+const { Movie } = require('../controller/movies.controller');
 
 const { catchAsync } = require('../util/catchAsync');
 const { AppError } = require('../util/appError');
@@ -17,8 +18,20 @@ exports.getAllActors = catchAsync(async (req, res, next) => {
         where: { status: 'active' },
         include: [
             {
-                
-            }
+                model: Movie,
+                include: [
+                    {
+                        model: Review,
+                        include: [
+                            {
+                                model: User,
+                                attributes: { exclude: ['password'] }
+                            }
+                        ]
+                    }
+                ]
+            },
+            { model: Review, include: [{ model: Movie }] }
         ]
     });
     res.status(200).json({
