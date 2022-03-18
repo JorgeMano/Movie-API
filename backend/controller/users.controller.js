@@ -80,9 +80,7 @@ exports.updateUser = async (req, res) => {
         const data = filterObj(
             req.body,
             'username',
-            'email',
-            'password',
-            'role'
+            'email'
         );
         const user = await User.findOne({
             where: { id: id, status: 'active' }
