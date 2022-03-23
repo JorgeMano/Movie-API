@@ -5,15 +5,19 @@ const {
   getUserById,
   createNewUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  loginUser
 } = require('../controller/users.controller');
+
+const { validateSession } = require('../middlewares/auth.middleware');
 
 const router = express.Router();
 
-router.get('/', getAllUsers);
-router.get('/:id', getUserById);
+router.get('/', validateSession, getAllUsers);
+router.get('/:id', validateSession, getUserById);
 router.post('/', createNewUser);
 router.patch('/:id', updateUser);
 router.delete('/:id', deleteUser);
+router.post('/login', loginUser);
 
 module.exports = { usersRouter: router };
