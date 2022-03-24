@@ -10,7 +10,7 @@ const {
 
 const router = express.Router();
 
-router.get('/', getAllActor);
+//router.get('/', getAllActor);
 router.get('/:id', getActorById);
 router.post('/', createNewActor);
 router.patch('/:id', updateActor);

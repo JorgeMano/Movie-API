@@ -1,15 +1,15 @@
 const { app } = require('./app');
-const { sequelize } = require('sequelize');
+const { Sequelize } = require('sequelize');
 
 const { sequelize } = require('./util/database');
-const { initModels } = require('./util/initModels');
+//const { initModels } = require('./util/initModels');
 
 sequelize
   .authenticate()
   .then(() => console.log('Database authenticated'))
   .catch((err) => console.log(err));
 
-initModels();
+//initModels();
 
 sequelize
   .sync()
