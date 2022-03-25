@@ -5,6 +5,7 @@ const dotenv = require('dotenv');
 const { Review } = require('../models/reviews.model');
 const { Movie } = require('../models/movies.model');
 const { User } = require('../models/users.model');
+const { Actor } = require('../models/actors.model');
 
 const { catchAsync } = require('../util/catchAsync');
 const { AppError } = require('../util/appError');
@@ -55,7 +56,7 @@ exports.getMovieById = catchAsync(async (req, res, next) => {
 });
 
 exports.createNewMovie = catchAsync(async (req, res, next) => {
-  const { title, description, duration, rating, img, genre } = req.body;
+  const { title, description, duration, rating, img, genre, Actor } = req.body;
   if (!title || !description || !duration || !rating || !img || !genre) {
     return next(
       new AppError(
@@ -72,6 +73,13 @@ exports.createNewMovie = catchAsync(async (req, res, next) => {
     img,
     genre
   });
+
+  const actorsInMoviesPromises = actors.map(async (actorId) => {
+    return await ActorInMovie.create({ actorId, movieId: newMovie.id });
+  });
+
+  await Promise.all(actorsInMoviesPromises);
+  
   res.status(200).json({
     status: 'success',
     data: {
