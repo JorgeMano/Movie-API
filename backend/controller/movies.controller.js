@@ -15,25 +15,9 @@ dotenv.config({ path: './config.env' });
 
 exports.getAllMovies = catchAsync(async (req, res, next) => {
   const movies = await Movie.findAll({
-    where: { status: 'active' },
-    include: [
-      {
-        model: Movie,
-        include: [
-          {
-            model: Review,
-            include: [
-              {
-                model: User,
-                attributes: { exclude: ['password'] }
-              }
-            ]
-          }
-        ]
-      },
-      { model: Review, include: [{ model: Movie }] }
-    ]
+    where: { status: 'active' }
   });
+
   res.status(200).json({
     status: 'success',
     data: { movies }
@@ -79,7 +63,7 @@ exports.createNewMovie = catchAsync(async (req, res, next) => {
   });
 
   await Promise.all(actorsInMoviesPromises);
-  
+
   res.status(200).json({
     status: 'success',
     data: {

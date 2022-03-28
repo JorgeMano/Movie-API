@@ -25,9 +25,9 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
 
 exports.getUserById = catchAsync(async (req, res, next) => {
   const { id } = req.params;
-  const user = await User.findOne({ 
-    attributes: { exclude: [ 'password' ] },
-    where: { id, status: 'active' } 
+  const user = await User.findOne({
+    attributes: { exclude: ['password'] },
+    where: { id, status: 'active' }
   });
 
   if (!user) {
