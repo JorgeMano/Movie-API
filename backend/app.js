@@ -13,18 +13,19 @@ const app = express();
 
 app.use(express.json());
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // EndPoints
 
 app.use('/api/v1/actors', actorsRouter);
 app.use('/api/v1/movies', moviesRouter);
 app.use('/api/v1/users', usersRouter);
 //app.use(globalErrorHandler);
+//initModels();
 sequelize
   .authenticate()
   .then(() => console.log('Database authenticated'))
   .catch((err) => console.log(err));
-
-//initModels();
 
 sequelize
   .sync()
