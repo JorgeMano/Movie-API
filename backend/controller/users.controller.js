@@ -14,25 +14,8 @@ dotenv.config({ path: './config.env' });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
   const users = await User.findAll({
-    where: { status: 'active' },
     attributes: { exclude: ['password'] },
-    include: [
-      {
-        model: Movie,
-        include: [
-          {
-            model: Review,
-            include: [
-              {
-                model: User,
-                attributes: { exclude: ['password'] }
-              }
-            ]
-          }
-        ]
-      },
-      { model: Review, include: [{ model: Movie }] }
-    ]
+    where: { status: 'active' }
   });
   res.status(200).json({
     status: 'success',
@@ -62,12 +45,19 @@ exports.createNewUser = catchAsync(async (req, res, next) => {
       new AppError(400, 'Must provide a valid, username, email, password, role')
     );
   }
+
+  const salt = await bcrypt.genSalt(12);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
   const newUser = await User.create({
     username,
     email,
-    password,
+    password: hashedPassword,
     role
   });
+
+  newUser.password = undefined;
+
   res.status(200).json({
     status: 'success',
     data: {
