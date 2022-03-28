@@ -12,34 +12,17 @@ const { AppError } = require('../util/appError');
 const { filterObj } = require('../util/filterObject');
 
 dotenv.config({ path: './config.env' });
-/*
+
 exports.getAllActors = catchAsync(async (req, res, next) => {
   const actors = await Actor.findAll({
-    where: { status: 'active' },
-    include: [
-      {
-        model: Movie,
-        include: [
-          {
-            model: Review,
-            include: [
-              {
-                model: User,
-                attributes: { exclude: ['password'] }
-              }
-            ]
-          }
-        ]
-      },
-      { model: Review, include: [{ model: Movie }] }
-    ]
+    where: { status: 'active' }
   });
   res.status(200).json({
     status: 'success',
     data: { actors }
   });
 });
-*/
+
 exports.getActorById = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   const actor = await Actor.findOne({ where: { id } });
